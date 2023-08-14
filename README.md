@@ -14,12 +14,6 @@ Modular architecture with clear separation of concerns.
 - Built-in URL validation.
 - Colorized output for easy readability.
 - Modular architecture with clear separation of concerns.
-### **Requirements:**
- - Rust
- - tokio
- - clap
- - reqwest
- - colored
 ### **Usage:**
 ```sh
 ht [OPTIONS] URL
