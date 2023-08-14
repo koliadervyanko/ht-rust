@@ -24,7 +24,7 @@ ht [OPTIONS] URL
 - **-b, --body**: The request body (useful for POST requests).
 ### **Example**
 ```sh
-ht -m post -b '{"name": "John"}' -h "Content-Type: application/json" https://api.example.com/users
+ht -m post -b "{ name: John }" -h "Content-Type: application/json" https://api.example.com/users
 ```
 ### **Modules:**
  - **printer**: Module responsible for displaying outputs.
