@@ -13,7 +13,7 @@ impl ArgumentParser<'_> {
     pub fn new<'a>(matches: &'a ArgMatches<'a>) -> ArgumentParser<'a> {
         ArgumentParser { matches }
     }
-    pub fn get_arg(&self, arg: &String) -> Result<String, &'static str> {
+    pub fn find_arg(&self, arg: &String) -> Result<String, &'static str> {
         if let Some(url) = self.matches.value_of(arg) {
             Ok(url.to_string())
         } else {
@@ -21,8 +21,8 @@ impl ArgumentParser<'_> {
             Err("Argument was don't provided")
         }
     }
-    pub fn get_final_arg(&self, arg: &String) -> String {
-        let arg = match self.get_arg(arg) {
+    pub fn get_arg(&self, arg: &String) -> String {
+        let arg = match self.find_arg(arg) {
             Ok(value) => value,
             Err(e) => {
                 eprintln!("Error: {}", e);
@@ -46,7 +46,7 @@ impl ArgumentParser<'_> {
         header
     }
     pub fn get_req_type(&self) -> RequestType {
-        if let Some(rtype) = self.matches.value_of("reqType") {
+        if let Some(rtype) = self.matches.value_of("method") {
             match RequestType::from_str(rtype) {
                 Ok(RequestType::Get) => RequestType::Get,
                 Ok(RequestType::Post) => RequestType::Post,
@@ -63,7 +63,7 @@ impl ArgumentParser<'_> {
         let rtype = self.get_req_type();
         match rtype {
             RequestType::Get => "{}".to_string(),
-            RequestType::Post => self.get_final_arg(&"body".to_string())
+            RequestType::Post => self.get_arg(&"body".to_string())
         }
     }
 }
