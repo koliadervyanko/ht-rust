@@ -5,29 +5,29 @@ use std::process::exit;
 use reqwest;
 
 use crate::builders::response_builder::ResponseBuilder;
-use crate::dto::request_dto::Request;
-use crate::printer::Printer;
+use crate::dto::request_dto::RequestDto;
+use crate::dto::response_dto::ResponseDto;
 use crate::request_type::RequestType;
 
 pub struct HttpClient<'a> {
-    pub request: &'a Request,
+    pub request: &'a RequestDto,
 }
 
 impl HttpClient<'_> {
-    pub fn new(request: &Request) -> HttpClient {
+    pub fn new(request: &RequestDto) -> HttpClient {
         HttpClient { request }
     }
-    pub async fn req(&self) {
+    pub async fn req(&self) -> ResponseDto {
         match self.request.req_type {
             RequestType::Get => match self.get().await {
-                Ok(_) => {}
+                Ok(dto) => dto,
                 Err(e) => {
                     eprintln!("Error {}", e);
                     exit(0)
                 }
             },
             RequestType::Post => match self.post().await {
-                Ok(_) => {}
+                Ok(dto) => dto,
                 Err(e) => {
                     eprintln!("Error {}", e);
                     exit(0)
@@ -35,16 +35,15 @@ impl HttpClient<'_> {
             },
         }
     }
-    async fn get(&self) -> Result<(), Box<dyn std::error::Error>> {
+    // Move printer to main.rs
+    async fn get(&self) -> Result<ResponseDto, Box<dyn std::error::Error>> {
         let client = reqwest::Client::new();
         let response = client.get(&self.request.link).headers(self.request.headers.clone()).send().await?;
         let response_builder = ResponseBuilder::new();
-        let res = response_builder.build(RequestType::Get, response).await?;
-        let printer = Printer::new(res);
-        printer.output();
-        Ok(())
+        let res = response_builder.build(response).await;
+        Ok(res)
     }
-    async fn post(&self) -> Result<(), Box<dyn std::error::Error>> {
+    async fn post(&self) -> Result<ResponseDto, Box<dyn std::error::Error>> {
         let client = reqwest::Client::new();
         let response = client.post(&self.request.link) // Changed from .get to .post
             .json(&self.request.body)
@@ -52,9 +51,7 @@ impl HttpClient<'_> {
             .send()
             .await?;
         let response_builder = ResponseBuilder::new();
-        let res = response_builder.build(RequestType::Post, response).await?;
-        let printer = Printer::new(res);
-        printer.output();
-        Ok(())
+        let res = response_builder.build(response).await;
+        Ok(res)
     }
 }

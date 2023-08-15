@@ -4,18 +4,20 @@ use std::process::exit;
 
 use colored::Colorize;
 use http::HeaderMap;
+use crate::dto::request_dto::RequestDto;
 
-use crate::dto::response_dto::Res;
+use crate::dto::response_dto::ResponseDto;
 use crate::request_type::RequestType;
 
 
 pub struct Printer {
-    pub res: Res,
+    pub res: ResponseDto,
+    pub req: RequestDto
 }
 
 impl Printer {
-    pub fn new(res: Res) -> Printer {
-        Printer { res }
+    pub fn new(res: ResponseDto, req: RequestDto) -> Printer {
+        Printer { res, req }
     }
     pub fn output(&self) {
         if self.res.status.is_success() {
@@ -34,7 +36,7 @@ impl Printer {
         println!("{}", self.res.response);
     }
     fn get_method(&self) -> String {
-        let method = match self.res.method {
+        let method = match self.req.req_type {
             RequestType::Get => "GET".to_string(),
             RequestType::Post => "POST".to_string()
         };

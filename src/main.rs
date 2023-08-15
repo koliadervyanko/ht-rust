@@ -3,6 +3,7 @@ use clap::{App, Arg};
 use crate::argument_parser::ArgumentParser;
 use crate::builders::request_builder::RequestBuilder;
 use crate::http_client::HttpClient;
+use crate::printer::Printer;
 use crate::validator::Validator;
 
 mod printer;
@@ -58,7 +59,9 @@ async fn main() {
             let validator = Validator::new(&request);
             validator.validate_url();
             let http_client = HttpClient::new(&request);
-            http_client.req().await;
+            let res = http_client.req().await;
+            let printer = Printer::new(res, request);
+            printer.output();
         }
         Err(e) => {
             eprintln!("Error parsing command line arguments: {}", e);

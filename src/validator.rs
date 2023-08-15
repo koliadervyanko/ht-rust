@@ -1,13 +1,13 @@
 use url::Url;
 
-use crate::dto::request_dto::Request;
+use crate::dto::request_dto::RequestDto;
 
 pub struct Validator<'a> {
-    pub request: &'a Request,
+    pub request: &'a RequestDto,
 }
 
 impl Validator<'_> {
-    pub fn new(request: &Request) -> Validator {
+    pub fn new(request: &RequestDto) -> Validator {
         Validator { request: &request }
     }
     pub fn validate_url(&self) {
