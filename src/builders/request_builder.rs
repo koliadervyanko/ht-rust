@@ -19,6 +19,19 @@ impl RequestBuilder {
                headers: String) -> RequestBuilder {
         RequestBuilder { req_type, link, body, headers }
     }
+    /// This function build request dto
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// let request_builder = RequestBuilder::new(req_type, url, body, header);
+    /// let request = request_builder.build();
+    /// ```
+    ///
+    /// # Returns
+    /// > *This method returns your RequestDto struct*
+    ///
+    /// Returns built RequestDto
     pub fn build(&self) -> RequestDto {
         match self.get_request() {
             Ok(request) => request,

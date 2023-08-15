@@ -57,7 +57,7 @@ async fn main() {
             // Build request
             let request_builder = RequestBuilder::new(req_type, url, body, header);
             let request = request_builder.build();
-            
+
             // Validate url
             let validator = Validator::new(&request);
             validator.validate_url();

@@ -17,6 +17,19 @@ impl HttpClient<'_> {
     pub fn new(request: &RequestDto) -> HttpClient {
         HttpClient { request }
     }
+    /// This function do req to the server
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// let http_client = HttpClient::new(&request);
+    /// let res = http_client.req().await;
+    /// ```
+    ///
+    /// # Returns
+    /// > **Returns ReposeDto**
+    ///
+    /// This method returns your built ResponseDto
     pub async fn req(&self) -> ResponseDto {
         match self.request.req_type {
             RequestType::Get => match self.get().await {
