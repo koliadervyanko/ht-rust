@@ -38,6 +38,7 @@ async fn main() {
         .version("1.0")
         .author("Author Kolia Der")
         .about("Does http requests")
+        .help_short("H")
         .arg(Arg::with_name("method").short("m").takes_value(true).help("Request type, GET, POST, ..."))
         .arg(Arg::with_name("url").help("URL for the HTTP request").index(1))
         .arg(Arg::with_name("body").help("If you use post method set up the body").number_of_values(1).short("b").takes_value(true))
