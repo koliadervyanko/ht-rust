@@ -35,15 +35,13 @@ impl ArgumentParser<'_> {
     ///
     /// Returns string
     pub fn get_arg(&self, arg: &String) -> String {
-        let arg = match self.find_arg(arg) {
+        match self.find_arg(arg) {
             Ok(value) => value,
             Err(e) => {
                 eprintln!("Error: {}", e);
                 exit(0)
             }
-        };
-
-        return arg;
+        }
     }
     /// This function gives you body from arguments
     ///
@@ -89,13 +87,14 @@ impl ArgumentParser<'_> {
             match RequestType::from_str(rtype) {
                 Ok(RequestType::Get) => RequestType::Get,
                 Ok(RequestType::Post) => RequestType::Post,
+                Ok(RequestType::Delete) => RequestType::Delete,
                 Err(e) => {
                     eprintln!("Error {}", e);
                     exit(0)
                 }
             }
         } else {
-            return RequestType::Get;
+            RequestType::Get
         }
     }
     /// This function gives you request type from arguments
@@ -118,7 +117,8 @@ impl ArgumentParser<'_> {
         let rtype = self.get_req_type();
         match rtype {
             RequestType::Get => "{}".to_string(),
-            RequestType::Post => self.get_arg(&"body".to_string())
+            RequestType::Post => self.get_arg(&"body".to_string()),
+            RequestType::Delete => "{}".to_string(),
         }
     }
 }

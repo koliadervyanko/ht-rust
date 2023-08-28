@@ -4,6 +4,7 @@ use std::str::FromStr;
 pub enum RequestType {
     Get,
     Post,
+    Delete,
 }
 
 impl FromStr for RequestType {
@@ -13,6 +14,7 @@ impl FromStr for RequestType {
         match s.to_lowercase().as_str() {
             "get" => Ok(RequestType::Get),
             "post" => Ok(RequestType::Post),
+            "del" => Ok(RequestType::Delete),
             _ => Err("Unsupported request type.".to_string()),
         }
     }

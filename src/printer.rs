@@ -49,11 +49,11 @@ impl Printer {
         println!("{}", self.res.response);
     }
     fn get_method(&self) -> String {
-        let method = match self.req.req_type {
+        match self.req.req_type {
             RequestType::Get => "GET".to_string(),
-            RequestType::Post => "POST".to_string()
-        };
-        method
+            RequestType::Post => "POST".to_string(),
+            RequestType::Delete => "DELETE".to_string(),
+        }
     }
     fn get_header(&self, headers: &HeaderMap, value: String) -> String {
         let header = if let Some(date) = headers.get(&value) {

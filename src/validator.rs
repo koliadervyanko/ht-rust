@@ -8,7 +8,7 @@ pub struct Validator<'a> {
 
 impl Validator<'_> {
     pub fn new(request: &RequestDto) -> Validator {
-        Validator { request: &request }
+        Validator { request }
     }
     /// This function validate url
     ///
