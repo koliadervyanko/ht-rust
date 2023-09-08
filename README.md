@@ -26,15 +26,6 @@ ht [OPTIONS] URL
 ```sh
 ht -m post -b "{ name: John }" -h "Content-Type: application/json" https://api.example.com/users
 ```
-### **Modules:**
- - **printer**: Module responsible for displaying outputs.
- - **converters**: Includes request_converter and response_converter for handling request-response transformations.
- - **dto**: Data Transfer Object module with request_dto and response_dto submodules.
- - **builders**: Houses request_builder and response_builder for creating and managing requests and responses respectively.
- - **http_client**: The core module that manages HTTP connections and sends the requests.
- - **argument_parser**: Parses CLI arguments.
- - **validator**: Contains logic for validating URLs.
- - **request_type**: Enum representing different types of HTTP methods.
 #### Author: 
 Kolia Der
 
