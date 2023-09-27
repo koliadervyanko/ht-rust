@@ -1,5 +1,13 @@
 use clap::{ App, Arg };
 
+use crate::{
+    argument_parser::ArgumentParser,
+    builders::request_builder::RequestBuilder,
+    validator::Validator,
+    http_client::HttpClient,
+    printer::Printer,
+};
+
 mod printer;
 
 mod converters {
@@ -55,14 +63,9 @@ async fn main() {
         )
         .get_matches_safe();
 
-    let a = 2 + 2;
-    println!("{}", a);
-
     match matches {
         Ok(matches) => {
-            Parse;
-            all;
-            arguments;
+            // Parse all arguments
             let argument_parser = ArgumentParser::new(&matches);
             let url = argument_parser.get_arg(&"url".to_string());
             let header = argument_parser.get_headers();
@@ -71,7 +74,7 @@ async fn main() {
 
             // Build request
             let request_builder = RequestBuilder::new(req_type, url, body, header);
-            let request = rxequest_builder.build();
+            let request = request_builder.build();
 
             // Validate url
             let validator = Validator::new(&request);
