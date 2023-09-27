@@ -5,6 +5,7 @@ pub enum RequestType {
     Get,
     Post,
     Delete,
+    Put,
 }
 
 impl FromStr for RequestType {
@@ -15,6 +16,7 @@ impl FromStr for RequestType {
             "get" => Ok(RequestType::Get),
             "post" => Ok(RequestType::Post),
             "del" => Ok(RequestType::Delete),
+            "put" => Ok(RequestType::Put),
             _ => Err("Unsupported request type.".to_string()),
         }
     }

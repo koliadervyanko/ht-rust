@@ -88,6 +88,7 @@ impl ArgumentParser<'_> {
                 Ok(RequestType::Get) => RequestType::Get,
                 Ok(RequestType::Post) => RequestType::Post,
                 Ok(RequestType::Delete) => RequestType::Delete,
+                Ok(RequestType::Put) => RequestType::Put,
                 Err(e) => {
                     eprintln!("Error {}", e);
                     exit(0)
@@ -119,6 +120,7 @@ impl ArgumentParser<'_> {
             RequestType::Get => "{}".to_string(),
             RequestType::Post => self.get_arg(&"body".to_string()),
             RequestType::Delete => "{}".to_string(),
+            RequestType::Put => self.get_arg(&"body".to_string()),
         }
     }
 }

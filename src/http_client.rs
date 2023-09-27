@@ -54,6 +54,14 @@ impl HttpClient<'_> {
                         exit(0)
                     }
                 }
+            RequestType::Put =>
+                match self.put().await {
+                    Ok(dto) => dto,
+                    Err(e) => {
+                        eprintln!("Error {}", e);
+                        exit(0)
+                    }
+                }
         }
     }
     async fn delete(&self) -> Result<ResponseDto, Box<dyn std::error::Error>> {
@@ -81,6 +89,17 @@ impl HttpClient<'_> {
         let client = reqwest::Client::new();
         let response = client
             .post(&self.request.link) // Changed from .get to .post
+            .json(&self.request.body)
+            .headers(self.request.headers.clone())
+            .send().await?;
+        let response_builder = ResponseBuilder::new();
+        let res = response_builder.build(response).await;
+        Ok(res)
+    }
+    async fn put(&self) -> Result<ResponseDto, Box<dyn std::error::Error>> {
+        let client = reqwest::Client::new();
+        let response = client
+            .put(&self.request.link) // Changed from .get to .post
             .json(&self.request.body)
             .headers(self.request.headers.clone())
             .send().await?;

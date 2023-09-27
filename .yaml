@@ -1,0 +1,10 @@
+Id: KoliaDer.HttpTerminal
+Version: 1.0.0
+Name: Http Terminal
+Publisher: Kolia Der
+License: MIT
+InstallerType: msi
+Installers:
+  - Arch: x64
+    Url: https://example.com/exampleapp.msi
+    Sha256: 7EBBCC904BFA54E23497E7B160B55FE2C7EE294636459C3E6D6A675485E4A4F4

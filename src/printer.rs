@@ -53,6 +53,7 @@ impl Printer {
             RequestType::Get => "GET".to_string(),
             RequestType::Post => "POST".to_string(),
             RequestType::Delete => "DELETE".to_string(),
+            RequestType::Put => "PUT".to_string(),
         }
     }
     fn get_header(&self, headers: &HeaderMap, value: String) -> String {
