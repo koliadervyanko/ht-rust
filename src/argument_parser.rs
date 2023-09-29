@@ -2,8 +2,14 @@ use std::process::exit;
 use std::str::FromStr;
 
 use clap::ArgMatches;
+use thiserror::Error;
 
 use crate::request_type::RequestType;
+
+#[derive(Debug, Error)]
+pub enum ArgumentParserError {
+    #[error("Argument {0} was don't provided")] ArgNotFound(String),
+}
 
 pub struct ArgumentParser<'a> {
     pub matches: &'a ArgMatches<'a>,
@@ -13,12 +19,11 @@ impl ArgumentParser<'_> {
     pub fn new<'a>(matches: &'a ArgMatches<'a>) -> ArgumentParser<'a> {
         ArgumentParser { matches }
     }
-    pub fn find_arg(&self, arg: &String) -> Result<String, &'static str> {
+    pub fn find_arg(&self, arg: &String) -> Result<String, ArgumentParserError> {
         if let Some(url) = self.matches.value_of(arg) {
             Ok(url.to_string())
         } else {
-            println!("Give the {} argument", arg);
-            Err("Argument was don't provided")
+            Err(ArgumentParserError::ArgNotFound(arg.to_string()))
         }
     }
     /// This function gives you argument from arguments
